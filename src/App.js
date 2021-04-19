@@ -11,21 +11,28 @@ const spotifyApi = new SpotifyWebApi();
 
 function App() {
 
-  spotifyApi.setAccessToken("BQDzFaKjPUe4owzrlWQcZOK5DIDeDfs_qBVbXKI3_BUnLgGsR6Jo1xS3d607RBpAyXEZIrVOdC6EuholfAGXaiyZq4DtFQE39lfF-cjL7TDoeLlvkCmr0bDnft0URYagiJpcRFQcHTYTjUrdAfPYeQoGnZVFNgDwoZ5PjzzTrxnTAOuTynBUvkGeeB2ElG6L_kDgNulnNpNtii5j7SOn3_LRjTI&refresh_token=AQBHQ3Aq3jykfSiD0EOJQxmDDmxioofm6bMKC7EpvAsbdBtKs1B-bTGvAn5XUvl0RJ6ASRK1m8s6UmhbFbSX4varCncxDH_1XUmw6Fc7JfDQlkmwh77N1p0t2tEZHolWAEE")
+ const access= spotifyApi.setAccessToken("BQDVJ2Dn-0Qoo0RVSlZ4FZKrwdjrPVnf8911VG-vYW25ZgRWuBtaElX1CJYPoZY_we8TGFgVF9-QEnCyNwrqeaj8Bl1cWq9Eds-X6I5vVyf2JoTnjXrBzaUgVhTjPh7dQfr1DsB_MN1Ristfrjq6_56IQNDm13oOIFtKbxa-zZV7eiomQUpUFx7PlKEbvp8SYYqK9-tD4qdMr9XH8Wz5L6P4b-Y&refresh_token=AQBeI8oNvor7fiC1wQdtu-7_JXIiK73-9dCF4fhVvYQbQ9O8-JaiVf8BfSW5GsBUkvCFC8LxQJAfKB8CssxmBe4AIiejQ8BlSb1skuVSt5jUcbz-TOxcBuJY9zWIDOV7Jco")
 
   const [search, setSearch] = useState ("")
   const [reviews, setReviews] = useState([])
   const [albums, setAlbums] = useState([])
-  const [token, setToken] = useState("")
+  
+  
 
   useEffect(() => {
     fetch ("http://localhost:3000/reviews")
     .then(response => response.json())
     .then(newreviews => {
-      setReviews(newreviews)
+     setReviews(newreviews)
     })
   }, []
   )
+
+  function ratingHandleUpdate(rObj){
+    const ratingHandle= reviews.filter((review) => review.id !== rObj.id)
+    const answer= [...ratingHandle, rObj]
+    setReviews(answer)
+  }
 
   function addReview(reviewObj){
     const newReviewArray=[...reviews, reviewObj]
@@ -39,9 +46,11 @@ function App() {
 
 
   function searchAlbums (search){
-    spotifyApi.searchAlbums(search).then(
+    spotifyApi.searchAlbums(search, { limit: 10 })
+    .then(
       function (data) {
-        setAlbums(data);
+        const searchalbums= data.albums.items.map(album => {return ({name: album.name, image: album.images[0].url, artist: album.artists[0].name, id: album.id })}) ;
+        setAlbums([...searchalbums])
       },
       function (err) {
         console.error(err);
@@ -60,9 +69,9 @@ function App() {
              <button>Login in to spotify</button> 
             </a>
       <Header />
-      <Albumpage search={search} setSearch={setSearch} albums={albums} setAlbums={setAlbums} searchAlbums={searchAlbums}/>
-      <ReviewPage addReview={addReview} reviews={reviews} setReviews={setReviews} deleteReviews={deleteReviews}/>
+      <Albumpage addReview={addReview} search={search} setSearch={setSearch} albums={albums} setAlbums={setAlbums} searchAlbums={searchAlbums} reviews={reviews} deleteReviews={deleteReviews} ratingHandleUpdate={ratingHandleUpdate}/>
       </div>
+      
       </div>
   );
 }
@@ -73,37 +82,6 @@ export default App;
 
 
              
-    {/* </div>
-<label htmlFor="search">Search Albums:</label>
-      <input
-        type="text"
-        id="search"
-        value= {search}
-        placeholder="Type a name to search..."
-        onChange={updateSearch}
-      />
-<div> */}
-       {/* <Switch>
-         <Route>
-           <Login exact path="/"></Login>
-         </Route>
-         <Route exact path="/albums">
-         <Header />
-        <Albumpage search={search} setSearch={setSearch} albums={albums} setAlbums={setAlbums} />
-        </Route>
-        <Route exact path="/reviews">
-        <Header />
-      <ReviewPage addReview={addReview} reviews={reviews} setReviews={setReviews} deleteReviews={deleteReviews}/>
-      </Route>
-      {/* <Route path="*">
-      <h1>404 not found</h1>
-      </Route> */}
-      {/* </Switch> */} 
-
-
-
-
-      // console.log(search, data)
 
 
     

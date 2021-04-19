@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-function NewReviewForm({ addReview, reviews, setReviews }) {
+function NewReviewForm({ id, addReview, reviews, setReviews , name, artist}) {
 
   const [post, setPost] = useState("")
-  const [rating, setRating] = useState("🎧")
-  const [album, setAlbum] = useState(1)
+  const [rating, setRating] = useState("1")
+  
   const [user, setUser] = useState(1)
+
 
   function submitReview(event) {
     event.preventDefault()
@@ -13,11 +14,11 @@ function NewReviewForm({ addReview, reviews, setReviews }) {
     const formData = {
       post: post,
       rating: rating,
-      album_id: album,
+      album: {spotify:id, name:name, artist:artist},
       user_id: user
     }
     
-
+    
     fetch("http://localhost:3000/reviews", {
       method: "POST",
       headers: {
@@ -38,22 +39,14 @@ function NewReviewForm({ addReview, reviews, setReviews }) {
       <h2>Write a New Review</h2>
       <form onSubmit={submitReview}>
         <textarea value={post} onChange={event => setPost(event.target.value)} type="text" name="post" placeholder="Start writing post here" />
-        {/* <input  value={album} onChange= {event => setAlbum (event.target.value)} type="text" name="album" placeholder="Album" /> */}
-        <select value={album} onChange={event => setAlbum(event.target.value)} >
-          <option value="1">Made in Lagos</option>
-          <option value="2">Graduation</option>
-          <option value="3">Limbo</option>
-          <option value="4">AstroWorld</option>
-          <option value="5">Views</option>
-        </select>
-
         <select value={rating} onChange={event => setRating(event.target.value)} >
-          <option value="🎧">🎧</option>
-          <option value="🎧🎧">🎧🎧</option>
-          <option value="🎧🎧🎧">🎧🎧🎧</option>
-          <option value="🎧🎧🎧🎧">🎧🎧🎧🎧</option>
-          <option value="🎧🎧🎧🎧🎧">🎧🎧🎧🎧🎧</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
+        
 
         <button type="submit">Add Review</button>
       </form>
