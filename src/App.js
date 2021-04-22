@@ -1,17 +1,20 @@
 
 import React, {useState, useEffect, Component} from "react";
-import { Switch, Route } from "react-router-dom"
+import { Link, Switch, Route } from "react-router-dom"
 import Header from "./Header";
 import Albumpage from "./AlbumPage";
 import ReviewPage from "./ReviewPage";
 import SpotifyWebApi from 'spotify-web-api-js'
-import Login from "./Login";
+import 'semantic-ui-css/semantic.min.css'
+import './App.css'
+import Logout from "./Logout"
+
 
 const spotifyApi = new SpotifyWebApi();
 
 function App() {
 
- const access= spotifyApi.setAccessToken("BQDVJ2Dn-0Qoo0RVSlZ4FZKrwdjrPVnf8911VG-vYW25ZgRWuBtaElX1CJYPoZY_we8TGFgVF9-QEnCyNwrqeaj8Bl1cWq9Eds-X6I5vVyf2JoTnjXrBzaUgVhTjPh7dQfr1DsB_MN1Ristfrjq6_56IQNDm13oOIFtKbxa-zZV7eiomQUpUFx7PlKEbvp8SYYqK9-tD4qdMr9XH8Wz5L6P4b-Y&refresh_token=AQBeI8oNvor7fiC1wQdtu-7_JXIiK73-9dCF4fhVvYQbQ9O8-JaiVf8BfSW5GsBUkvCFC8LxQJAfKB8CssxmBe4AIiejQ8BlSb1skuVSt5jUcbz-TOxcBuJY9zWIDOV7Jco")
+ const access= spotifyApi.setAccessToken("BQAWWRuxI0Ff-yegh_Zms0fF68QUwjft0fdkLeve7YJ3pg6y03j_rGyOIezIiQ8TW_o1JTr3JiZfIkcqcNXTrUOH299J1TPH6Luy_ZBLsWEC7z-Y2cWmT9L2UHD16zxh1UMLk2BgX9oEK-EyX_2RBP5ZX0U8pgrH2EzbFTsGfYjsojCt6EK9DGpVt0BVEjRwepcqQgKcp7EuWxwlU2Tje31bQ8w&refresh_token=AQA3trH-mWV7OXttwQmu3wj9hQojuTY6ZBUoK7YNFIjW7RTRaw0e1Lj5u04f-eMuXtOGG6JxbpimcgX2vTafc21466C-DszQtc4gFTJYUI2iTXpp7iXr_4POJ6sZSuutS48")
 
   const [search, setSearch] = useState ("")
   const [reviews, setReviews] = useState([])
@@ -30,6 +33,7 @@ function App() {
 
   function ratingHandleUpdate(rObj){
     const ratingHandle= reviews.filter((review) => review.id !== rObj.id)
+
     const answer= [...ratingHandle, rObj]
     setReviews(answer)
   }
@@ -46,7 +50,7 @@ function App() {
 
 
   function searchAlbums (search){
-    spotifyApi.searchAlbums(search, { limit: 10 })
+    spotifyApi.searchAlbums(search, { limit: 12 })
     .then(
       function (data) {
         const searchalbums= data.albums.items.map(album => {return ({name: album.name, image: album.images[0].url, artist: album.artists[0].name, id: album.id })}) ;
@@ -63,15 +67,24 @@ function App() {
 
   
   return (
+    <div >
     <div className="app">
-<div>
-         <a href='http://localhost:8888'>
-             <button>Login in to spotify</button> 
+      <a href='http://localhost:8888'>
+             <button class="ui button">Login in to spotify</button> 
             </a>
+
+    <div>
+        
       <Header />
       <Albumpage addReview={addReview} search={search} setSearch={setSearch} albums={albums} setAlbums={setAlbums} searchAlbums={searchAlbums} reviews={reviews} deleteReviews={deleteReviews} ratingHandleUpdate={ratingHandleUpdate}/>
+      {/* <Switch>
+      <Route exact path="/logout">
+          <Logout />
+     </Route>
+      </Switch> */}
+     
       </div>
-      
+      </div>
       </div>
   );
 }

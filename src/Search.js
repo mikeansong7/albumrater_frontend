@@ -5,7 +5,6 @@ function Search({search, setSearch, searchAlbums}) {
   function updateSearch(event) {
     setSearch(event.target.value)
     searchAlbums(event.target.value)
-    console.log(updateSearch)
 }
 
 
@@ -13,13 +12,13 @@ function Search({search, setSearch, searchAlbums}) {
 
   
   return (
-    <div className="searchbar">
+    <div  className="searchbar">
       <label htmlFor="search">Search Albums:</label>
-      <input
+      <input 
         type="text"
         id="search"
         value= {search}
-        placeholder="Type a name to search..."
+        placeholder="Type album name here"
         onChange={updateSearch}
       />
     </div>

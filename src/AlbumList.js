@@ -26,10 +26,12 @@ function AlbumList({albums, setAlbums, addReview, setReviews, reviews, searchAlb
 
 
   return (
-   
-    <ul className="cards">
+        <div class="acard">
+    <ol className="cards">
       {albumList}
-      </ul>
+      </ol>
+      </div>
+
      
   );
 }

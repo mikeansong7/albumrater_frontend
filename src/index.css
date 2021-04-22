@@ -3,11 +3,46 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    background: green;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
+
+div.app{
+  background-image: url(https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/11/music-logo-design.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+ol.cards {
+ 
+  display: grid;
+   
+  grid-template-columns: repeat(3, 1fr);
+   
+  grid-auto-rows: auto;
+   
+  grid-gap: 1rem;
+   
+  }
+   
+   
+  .card {
+   
+  border: 2px solid #e7e7e7;
+   
+  border-radius: 4px;
+   
+  padding: .5rem;
+   
+  }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* url(https://cdn.dribbble.com/users/295073/screenshots/14646460/media/67f69fd9e04f1e3390ba222aaa015611.jpg?compress=1&resize=400x300);
+} */

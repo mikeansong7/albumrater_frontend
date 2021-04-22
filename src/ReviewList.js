@@ -6,6 +6,7 @@ import { Link } from "react-router-dom"
 
 
 function ReviewList({reviews, deleteReviews, setReviews, ratingHandleUpdate, albums }) {
+  
   const reviewList= reviews.map((review) => {
     return <ReviewCard 
     key={review.id}
@@ -30,8 +31,13 @@ function ReviewList({reviews, deleteReviews, setReviews, ratingHandleUpdate, alb
     <ul className="cards">
       {reviewList}
       </ul>
+   
       </div>
   );
 }
 
 export default ReviewList;
+
+ {/* <h3>
+    <Link to="/logout"> Logout</Link>
+    </h3> */}

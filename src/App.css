@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.App-background{
+  background-color: rgb(97, 219, 97)
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +39,5 @@
   to {
     transform: rotate(360deg);
   }
+
 }
